@@ -11,7 +11,9 @@
     "build": "spago build",
     "build:examples": "spago -x examples/examples.dhall build"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "purty": "^6.2.0"
+  },
   "dependencies": {
     "enquirer": "^2.3.5"
   }
