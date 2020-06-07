@@ -2,14 +2,25 @@ module SelectExample where
 
 import Prelude
 import Enquirer (prompt, PromptOptions(..))
-import Effect.Aff (launchAff_)
+import Effect.Aff (Aff, launchAff_)
 import Effect (Effect)
+import Effect.Console (log)
+import Effect.Class (liftEffect)
+import ExampleCommons (parseResponse)
 
--- import Effect.Console (log)
--- import Effect.Class (liftEffect)
+askFruit :: Aff { fruit :: String }
+askFruit =
+  parseResponse
+    =<< prompt
+        ( Select
+            { name: "fruit"
+            , message: "What is your favourite fruit?"
+            , choices: [ "Banana", "Apple", "Oranges" ]
+            }
+        )
+
 main :: Effect Unit
 main =
   launchAff_ do
-    prompt
-      $ Select
-          { name: "fruit", message: "What is your favourite fruit?", choices: [ "Banana", "Apple", "Oranges" ] }
+    fruit <- askFruit
+    liftEffect $ log $ show fruit

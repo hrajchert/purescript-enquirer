@@ -4,6 +4,7 @@ in conf //
       conf.dependencies #
         [ "console"
         , "psci-support"
+        , "simple-json"
         ]
   , sources =
       conf.sources #
