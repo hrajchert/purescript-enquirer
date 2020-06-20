@@ -7,6 +7,8 @@ function mapPromptConstructorName(name) {
       return "input";
     case "Select":
       return "select";
+    case "Confirm":
+      return "confirm";
   }
 }
 

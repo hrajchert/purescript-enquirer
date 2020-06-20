@@ -13,6 +13,7 @@ import Foreign (Foreign)
 data PromptOptions
   = SinglePrompt { name :: String, message :: String }
   | Select { name :: String, message :: String, choices :: Array String }
+  | Confirm { name :: String, message :: String, initial :: Boolean }
 
 foreign import _prompt :: FU.EffectFn1 PromptOptions (Promise Foreign)
 
