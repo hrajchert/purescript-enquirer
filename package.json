@@ -9,7 +9,8 @@
   "scripts": {
     "clean": "rm -rf .spago output node_modules",
     "build": "spago build",
-    "build:examples": "spago -x examples/examples.dhall build"
+    "build:examples": "spago -x examples/examples.dhall build",
+    "example": "node examples/runExamples.js"
   },
   "devDependencies": {
     "purty": "^6.2.0"
