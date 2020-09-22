@@ -1,7 +1,7 @@
 module SelectExample where
 
 import Prelude
-import Enquirer (prompt, PromptOptions(..))
+import Enquirer (prompt, PromptOptions(..), select)
 import Effect.Aff (Aff, launchAff_)
 import Effect (Effect)
 import Effect.Console (log)
@@ -24,3 +24,5 @@ main =
   launchAff_ do
     fruit <- askFruit
     liftEffect $ log $ show fruit
+    fruit2 <- select "And the second?" [ "Banana", "Apple", "Oranges" ]
+    liftEffect $ log $ show fruit2

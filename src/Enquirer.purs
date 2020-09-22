@@ -1,26 +1,38 @@
 module Enquirer
-  ( prompt
-  , promptMultiple
-  , PromptOptions(..)
+  ( module Enquirer.Internal
+  , confirm
+  , confirm'
+  , select
   ) where
 
 import Prelude
-import Effect.Uncurried as FU
-import Control.Promise (Promise, toAffE)
 import Effect.Aff (Aff)
-import Foreign (Foreign)
+import Enquirer.Internal (PromptOptions(..), prompt, promptMultiple)
+import Foreign (unsafeFromForeign)
 
-data PromptOptions
-  = SinglePrompt { name :: String, message :: String }
-  | Select { name :: String, message :: String, choices :: Array String }
-  | Confirm { name :: String, message :: String, initial :: Boolean }
+confirm' :: Boolean -> String -> Aff Boolean
+confirm' initial message = do
+  response <-
+    prompt
+      ( Confirm
+          { name: "answer"
+          , message
+          , initial
+          }
+      )
+  pure $ (_.answer <<< unsafeFromForeign) response
 
-foreign import _prompt :: FU.EffectFn1 PromptOptions (Promise Foreign)
+confirm :: String -> Aff Boolean
+confirm = confirm' true
 
-prompt :: PromptOptions -> Aff Foreign
-prompt = toAffE <<< FU.runEffectFn1 _prompt
-
-foreign import _promptMultiple :: FU.EffectFn1 (Array PromptOptions) (Promise Foreign)
-
-promptMultiple :: Array PromptOptions -> Aff Foreign
-promptMultiple = toAffE <<< FU.runEffectFn1 _promptMultiple
+select :: String -> Array String -> Aff String
+select message choices = do
+  response <-
+    prompt
+      ( Select
+          { name: "answer"
+          , message
+          , choices
+          }
+      )
+  pure $ (_.answer <<< unsafeFromForeign) response

@@ -1,7 +1,7 @@
 module ConfirmExample where
 
 import Prelude
-import Enquirer (prompt, PromptOptions(..))
+import Enquirer (prompt, PromptOptions(..), confirm)
 import Effect.Aff (Aff, launchAff_)
 import Effect (Effect)
 import Effect.Console (log)
@@ -22,5 +22,7 @@ askConfirmation =
 main :: Effect Unit
 main =
   launchAff_ do
-    confirm <- askConfirmation
-    liftEffect $ log $ show confirm
+    confirmation <- askConfirmation
+    liftEffect $ log $ show confirmation
+    really <- confirm "Really?"
+    liftEffect $ log $ show really
