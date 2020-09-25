@@ -1,9 +1,11 @@
 const select = require("../output/SelectExample");
 const confirm = require("../output/ConfirmExample");
+const singlePrompt = require("../output/SinglePromptExample");
 
 const examples = {
   select,
   confirm,
+  singlePrompt,
 };
 
 function help() {

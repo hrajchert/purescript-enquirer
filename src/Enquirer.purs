@@ -3,6 +3,7 @@ module Enquirer
   , confirm
   , confirm'
   , select
+  , singlePrompt
   ) where
 
 import Prelude
@@ -33,6 +34,17 @@ select message choices = do
           { name: "answer"
           , message
           , choices
+          }
+      )
+  pure $ (_.answer <<< unsafeFromForeign) response
+
+singlePrompt :: String -> Aff String
+singlePrompt message = do
+  response <-
+    prompt
+      ( SinglePrompt
+          { name: "answer"
+          , message
           }
       )
   pure $ (_.answer <<< unsafeFromForeign) response
